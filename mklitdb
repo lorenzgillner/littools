@@ -14,7 +14,8 @@ function get_key() {
 # Extract tags/keywords from file name.
 function get_tags() {
 	if [[ "$1" =~ .+(_[a-z]+)+\..+ ]]; then
-		echo -n "${TAG_DELIM}${1%.*}" | cut -d '_' -f 2- --output-delimiter=${TAG_DELIM}
+		echo -n "${TAG_DELIM}"
+		echo -n "${1%.*}" | cut -d '_' -f 2- --output-delimiter=${TAG_DELIM}
 	fi
 }
 
@@ -28,8 +29,8 @@ function process_file() {
 	| tr -d -c '[:alpha:] '
 }
 
-# Write out a "database" entry of key, tags and plain text contents
-# of a file ($1) as CSV.
+# Write out a "database" entry of key, tags, absolute path and
+# plain text contents of a file ($1) as CSV.
 function write_entry() {
 	FILE=$(basename "$1")
 	KEY=$(get_key "${FILE}")
