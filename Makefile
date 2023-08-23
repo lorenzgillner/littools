@@ -1,6 +1,6 @@
 PREFIX = ~/.local/bin
 
-tools = mklitdb
+tools = mklitdb.sh mkiidx.pl
 
 .PHONY: install
 
