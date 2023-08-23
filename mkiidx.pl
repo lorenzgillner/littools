@@ -20,6 +20,10 @@ sub deduplicate {
 	return @array_without_duplicates;
 }
 
+if (@ARGV != 1) {
+	die "Usage: $0 <database.csv>\n";
+}
+
 my $db = $ARGV[0];
 
 my %corpus;
