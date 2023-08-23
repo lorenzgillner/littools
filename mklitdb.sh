@@ -14,7 +14,6 @@ function get_key() {
 # Extract tags/keywords from file name.
 function get_tags() {
 	if [[ "$1" =~ .+(_[a-z]+)+\..+ ]]; then
-		echo -n "${TAG_DELIM}"
 		echo -n "${1%.*}" | cut -d '_' -f 2- --output-delimiter=${TAG_DELIM}
 	fi
 }
