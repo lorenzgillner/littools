@@ -19,11 +19,11 @@ function get_tags() {
 # Convert the contents of a PDF file to all-lowercase text and
 # remove all non-letter-characters from it.
 function process_file() {
-	pdf2txt "$1" \
-	| tr '[:cntrl:][:punct:][:digit:][:space:]' ' ' \
-	| tr -s ' ' \
-	| tr '[:upper:]' '[:lower:]' \
-	| tr -d -c '[:alpha:] '
+	pdf2txt "$1" |
+		tr '[:cntrl:][:punct:][:digit:][:space:]' ' ' |
+		tr -s ' ' |
+		tr '[:upper:]' '[:lower:]' |
+		tr -d -c '[:alpha:] '
 }
 
 # Write out a "database" entry of key, tags, absolute path and
@@ -36,7 +36,7 @@ function write_entry() {
 	printf "%s,%s,%s," "${KEY}" "${TAGS}" "${FPATH}"
 	process_file "$1"
 	echo
-}	
+}
 
 trap handle_int INT
 
