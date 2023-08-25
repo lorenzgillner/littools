@@ -1,9 +1,8 @@
 PREFIX = ~/.local/bin
 
-tools = mklitentry mkiidx
+tools = mklitentry mklitdb mkiidx
 
 .PHONY: install
 
 install:
 	cp $(tools) $(PREFIX)/
-

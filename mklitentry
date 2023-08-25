@@ -19,7 +19,9 @@ function get_tags() {
 function process_file() {
 	pdftotext "$1" - |
 		tr [:upper:] [:lower:] |
-		tr -s -c [a-z] ' '
+		tr -s -c a-z '\n' |
+		sort -u |
+		tr '\n' ' '
 }
 
 # Write out a "database" entry of key, tags, absolute path and

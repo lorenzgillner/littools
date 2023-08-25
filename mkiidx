@@ -26,7 +26,7 @@ if ( @ARGV != 1 ) {
 
 my $db = $ARGV[0];
 
-my %corpus;
+my %iidx;
 
 my $csv = Text::CSV->new( { binary => 1 } )
   or die "Cannot use CSV: " . Text::CSV->error_diag();
@@ -45,11 +45,11 @@ while ( my $line = $csv->getline($f) ) {
     @words = deduplicate(@words);
 
     while ( my $word = shift @words ) {
-        if ( !$corpus{$word} ) {
-            @{ $corpus{$word} } = ($key);
+        if ( !$iidx{$word} ) {
+            @{ $iidx{$word} } = ($key);
         }
         else {
-            push @{ $corpus{$word} }, $key;
+            push @{ $iidx{$word} }, $key;
         }
     }
 }
@@ -61,7 +61,7 @@ else {
     $csv->error_diag();
 }
 
-foreach my $k ( keys %corpus ) {
+foreach my $k ( keys %iidx ) {
     print "$k,";
-    print join( ';', @{ $corpus{$k} } ) . "\n";
+    print join( ';', @{ $iidx{$k} } ) . "\n";
 }
