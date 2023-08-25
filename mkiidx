@@ -46,10 +46,10 @@ while ( my $line = $csv->getline($f) ) {
 
     while ( my $word = shift @words ) {
         if ( !$iidx{$word} ) {
-            @{ $iidx{$word} } = ($key);
+            @{ $iidx{$word} } = ($key.":".$path);
         }
         else {
-            push @{ $iidx{$word} }, $key;
+            push @{ $iidx{$word} }, $key.":".$path;
         }
     }
 }
