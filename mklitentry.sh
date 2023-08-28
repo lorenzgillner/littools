@@ -1,22 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-function handle_int() {
+handle_int() {
 	exit 1
 }
 
 # Extract citation key from file name.
-function get_key() {
+get_key() {
 	echo -n "$1" | cut -d '_' -f 1
 }
 
 # Extract tags/keywords from file name.
-function get_tags() {
+get_tags() {
 	echo -n "$1" | cut -s -d '_' -f 2- --output-delimiter=';'
 }
 
 # Convert the contents of a PDF file to all-lowercase text and
 # remove all non-letter-characters from it.
-function process_file() {
+process_file() {
 	pdftotext "$1" - |
 		tr [:upper:] [:lower:] |
 		tr -s -c a-z '\n' |
@@ -26,7 +26,7 @@ function process_file() {
 
 # Write out a "database" entry of key, tags, absolute path and
 # plain text contents of a file ($1) as CSV.
-function write_entry() {
+write_entry() {
 	FILEPATH=$(readlink -f "$1")
 	FILENAME="$(basename "${FILEPATH}" | cut -d '.' -f 1)"
 	KEY=$(get_key "${FILENAME}")

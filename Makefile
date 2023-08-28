@@ -1,6 +1,6 @@
 PREFIX = ~/.local/bin
 
-tools = mklitentry mklitdb mkiidx
+tools = mklitentry.sh mklitdb.sh mkiidx.pl bibo.pl
 
 .PHONY: install
 
