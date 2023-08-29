@@ -2,7 +2,24 @@
 
 Collection of scripts for literature management.
 
-## Overview
+## Requirements
+
+In addition to Perl 5 (with Tk) and a POSIX-compliant shell with `coreutils`,  the following command line tools are required:
+
+- `parallel`
+- `xdg-open`
+- `fdfind` (also known as `fd`)
+- `pdftotext` (**not** `pdf2txt`)
+
+## Installation
+
+Customize `PREFIX` in the `Makefile`, if required (`~/.local/bin` by default). Then, simply run:
+
+```shell
+make install
+```
+
+## Command overview
 
 ### mklitentry
 
