@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=0.1
+Name=litsearch
+Comment=Search your local library
+Exec=$HOME/.local/bin/litsearch.sh $HOME/Library/computer\ science/iidx.csv
+Icon=$HOME/.local/share/icons/litsearch.png
+Terminal=false
+Type=Application
+Categories=Utility;
+
