@@ -1,6 +1,6 @@
 PREFIX = ~/.local/bin
 
-tools = mklitentry.sh mklitdb.sh mkiidx.pl bibo.pl
+tools = mklitentry.sh mklitdb.sh mkiidx.pl iidxlookup.pl litsearch.sh
 
 .PHONY: install
 

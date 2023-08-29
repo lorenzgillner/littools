@@ -3,7 +3,7 @@
 FINDCMD=fdfind
 
 if [ $# -ne 1 ]; then
-    echo "Usage: mklitdb <directory>"
+    echo "Usage: mklitdb.sh <directory>"
     exit 1
 fi
 
