@@ -118,7 +118,7 @@ sub search {
 }
 
 sub search_and_present {
-  my $query_string = $_[0];
+  my $query_string = lc($_[0]);
   my ($inverse_index) = $_[1];
   my ($listbox) = $_[2];
 
@@ -207,8 +207,8 @@ my $query_field = $entry_frame->Entry(
 );
 
 my $search_button = $entry_frame->Button(
-  -text => "\x{25B6}",
-  -font => "courier 13 bold",
+  -text => "Search!",
+  -font => $font,
   -padx => 2,
   -pady => 2,
   -command => sub {

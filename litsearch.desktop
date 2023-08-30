@@ -2,9 +2,11 @@
 Version=0.1
 Name=litsearch
 Comment=Search your local library
-Exec=$HOME/.local/bin/litsearch.sh $HOME/Library/computer\ science/iidx.csv
-Icon=$HOME/.local/share/icons/litsearch.png
-Terminal=false
+GenericName=Search Engine
+Keywords=literature;library;search;
+Exec=uxterm -e litsearch.sh
 Type=Application
-Categories=Utility;
-
+Icon=litsearch.png
+Categories=Utility
+MimeType=application/x-sh;
+StartupNotify=true
