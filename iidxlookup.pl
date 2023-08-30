@@ -151,7 +151,7 @@ my $root = MainWindow->new();
 
 $root->title("$filename");
 
-my $font = 'courier 13';
+my $font = 'courier 12';
 
 my $result_frame = $root->Frame(
 )->pack(
@@ -165,7 +165,8 @@ my $scrollbar = $result_frame->Scrollbar();
 my $result_list = $result_frame->Listbox(
   -selectmode => 'single',
   -font => $font,
-  -width => 123,
+  -width => 100,
+  -height => 33,
   -yscrollcommand => ['set' => $scrollbar]
 );
 
