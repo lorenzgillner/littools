@@ -70,4 +70,6 @@ Wrapper for `iidxlookup.pl` that opens its output in a default application.
 
 1. Calculate $TF$ or $TF/IDF$ in `mklitentry.sh`
 1. Rank results in `iidxlookup.pl`
-
+1. Update database on file system changes (`inotifywatch`)
+1. Re-read index in `iidxlookup.pl` on updates
+1. Command for updating an existing `iidx.csv`

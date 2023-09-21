@@ -141,6 +141,8 @@ my $filename = $ARGV[0];
 my $query_string = '';
 my %iidx;
 
+print STDERR "Loading database ...\n";
+
 load_iidx($filename, \%iidx);
 
 # +-----------------+
@@ -244,3 +246,5 @@ present_results(\$result_list, list_all(\%iidx));
 $query_field->focus;
 
 MainLoop();
+
+print STDERR "Bye!\n";
