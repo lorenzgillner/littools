@@ -1,7 +1,8 @@
 #!/bin/bash
 
 VERSION=0.1
-OPEN="zathura"
+OPEN_CMD="zathura"
+GLOBAL_INVERSE_INDEX="/var/lib/litsearch/iidx.csv"
 
 quit() {
 	exit 1
@@ -22,15 +23,19 @@ echo "version ${VERSION}"
 
 if [ $# -eq 1 ]; then
 	IIDX="$1"
-elif [ -e ${HOME}/.iidx.csv ]; then
-	IIDX="${HOME}/.iidx.csv"
+elif [ -e "${GLOBAL_INVERSE_INDEX}" ]; then
+	IIDX="${GLOBAL_INVERSE_INDEX}"
 else
 	IIDX="$(zenity --file-selection --icon-name=litsearch)" || quit
 fi
 
+echo "Loading database ..."
+
 iidxlookup.pl "${IIDX}" | while read -r DOC; do
 	echo "${DOC}"
-	nohup ${OPEN} "${DOC}" > /dev/null &
+	${OPEN_CMD} "${DOC}" 2>/dev/null &
 done
+
+echo "Bye!"
 
 sleep 1

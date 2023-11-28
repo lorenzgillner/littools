@@ -9,4 +9,4 @@ fi
 
 ROOTDIR="$1"
 
-$FINDCMD ".+\.pdf" "$ROOTDIR" | parallel mklitentry {} 2>/dev/null
+$FINDCMD ".+\.pdf" "$ROOTDIR" | parallel mklitentry.sh {}

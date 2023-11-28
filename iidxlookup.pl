@@ -141,8 +141,6 @@ my $filename = $ARGV[0];
 my $query_string = '';
 my %iidx;
 
-print STDERR "Loading database ...\n";
-
 load_iidx($filename, \%iidx);
 
 # +-----------------+
@@ -151,7 +149,7 @@ load_iidx($filename, \%iidx);
 
 my $root = MainWindow->new();
 
-$root->title("$filename");
+$root->title("$0: $filename");
 
 my $font = 'courier 12';
 
@@ -199,6 +197,20 @@ my $entry_frame = $root->Frame(
 
 $entry_frame->gridRowconfigure(0, -weight => 1);
 
+my $reload_button = $entry_frame->Button(
+  -text => "Reload",
+  -font => $font,
+  -padx => 2,
+  -pady => 2,
+  -command => sub {
+    load_iidx($filename, \%iidx);
+    present_results(\$result_list, list_all(\%iidx));
+  }
+)->pack(
+  -side => 'left',
+  -anchor => 'c'
+);
+
 my $query_field = $entry_frame->Entry(
   -textvariable => \$query_string,
   -font => $font
@@ -210,7 +222,7 @@ my $query_field = $entry_frame->Entry(
 );
 
 my $search_button = $entry_frame->Button(
-  -text => "Search!",
+  -text => "Search",
   -font => $font,
   -padx => 2,
   -pady => 2,
@@ -246,5 +258,3 @@ present_results(\$result_list, list_all(\%iidx));
 $query_field->focus;
 
 MainLoop();
-
-print STDERR "Bye!\n";
