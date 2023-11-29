@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Tk;
+use Tk::Photo;
 use Text::CSV;
 
 # allow umlaut characters in output
@@ -149,7 +150,10 @@ load_iidx($filename, \%iidx);
 
 my $root = MainWindow->new();
 
-$root->title("$0: $filename");
+# TODO un-hardcode title and icon
+$root->title("litsearch");
+my $icon = $root->Photo(-file => '/var/lib/litsearch/icon.gif');
+$root->iconimage($icon);
 
 my $font = 'courier 12';
 
