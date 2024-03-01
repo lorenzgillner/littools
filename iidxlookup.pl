@@ -2,15 +2,18 @@
 
 use strict;
 use warnings;
+
 use Tk;
 use Tk::Photo;
+use Tk::ProgressBar;
+
 use Text::CSV;
 
 # allow umlaut characters in output
 binmode STDOUT, ":utf8";
 
 if ( @ARGV != 1 ) {
-  die "Usage: $0 <inverseindex.csv>\n";
+  die "Usage: $0 <my_inverse_index.csv>\n";
 }
 
 sub deduplicate {
@@ -148,20 +151,25 @@ load_iidx($filename, \%iidx);
 # | interface setup |
 # +-----------------+
 
-my $root = MainWindow->new();
+my $mw = MainWindow->new();
+
+#my $loading_dialog = $mw->Toplevel;
+#$loading_dialog->title('Loading ...');
 
 # TODO un-hardcode title and icon
-$root->title("litsearch");
-my $icon = $root->Photo(-file => '/var/lib/litsearch/icon.gif');
-$root->iconimage($icon);
+$mw->title("litsearch");
+my $icon = $mw->Photo(-file => '/var/lib/litsearch/icon.gif');
+$mw->iconimage($icon);
+#$mw->setIcon($icon);
 
-my $font = 'courier 12';
+#my $font = 'courier 12';
+my $font = 'Ubuntu-Light 12';
 
-my $result_frame = $root->Frame(
+my $result_frame = $mw->Frame(
 )->pack(
   -expand => 1,
   -fill => 'both',
-  -side => 'bottom',
+  -side => 'top'
 );
 
 my $scrollbar = $result_frame->Scrollbar();
@@ -170,7 +178,11 @@ my $result_list = $result_frame->Listbox(
   -selectmode => 'single',
   -font => $font,
   -width => 100,
-  -height => 33,
+  -height => 25,
+  -background => 'white',
+  -foreground => 'black',
+  -selectbackground => '#80cbf5',
+  -selectforeground => 'black',
   -yscrollcommand => ['set' => $scrollbar]
 );
 
@@ -189,14 +201,14 @@ $result_list->pack(
   -fill => 'both'
 );
 
-my $entry_frame = $root->Frame(
+my $entry_frame = $mw->Frame(
   -height => 20
 )->pack(
   -expand => 0,
   -fill => 'x',
   -padx => 2,
   -pady => 2,
-  -side => 'top'
+  -side => 'bottom'
 );
 
 $entry_frame->gridRowconfigure(0, -weight => 1);
@@ -217,7 +229,9 @@ my $reload_button = $entry_frame->Button(
 
 my $query_field = $entry_frame->Entry(
   -textvariable => \$query_string,
-  -font => $font
+  -font => $font,
+  -background => 'white',
+  -foreground => 'black'
 )->pack(
   -expand => 1,
   -fill => 'x',
@@ -251,7 +265,7 @@ $query_field->bind('<Return>', sub {
   search_and_present($query_string, \%iidx, \$result_list);
 });
 
-$root->bind('<Control-q>', sub { exit });
+$mw->bind('<Control-q>', sub { exit });
 
 # +-----------+
 # | main loop |

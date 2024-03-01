@@ -8,7 +8,7 @@ In addition to Perl 5 (with Tk) and a POSIX-compliant shell with `coreutils`,  t
 
 - `parallel`
 - `zathura` PDF viewer
-- `fdfind` (also known as `fd`)
+- `fdfind` (also known as `fd-find` or  just `fd`)
 - `pdftotext` (**not** `pdf2txt`)
 
 ## Installation
