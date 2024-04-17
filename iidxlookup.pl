@@ -213,19 +213,19 @@ my $entry_frame = $mw->Frame(
 
 $entry_frame->gridRowconfigure(0, -weight => 1);
 
-my $reload_button = $entry_frame->Button(
-  -text => "Reload",
-  -font => $font,
-  -padx => 2,
-  -pady => 2,
-  -command => sub {
-    load_iidx($filename, \%iidx);
-    present_results(\$result_list, list_all(\%iidx));
-  }
-)->pack(
-  -side => 'left',
-  -anchor => 'c'
-);
+#~ my $reload_button = $entry_frame->Button(
+  #~ -text => "Reload",
+  #~ -font => $font,
+  #~ -padx => 2,
+  #~ -pady => 2,
+  #~ -command => sub {
+    #~ load_iidx($filename, \%iidx);
+    #~ present_results(\$result_list, list_all(\%iidx));
+  #~ }
+#~ )->pack(
+  #~ -side => 'left',
+  #~ -anchor => 'c'
+#~ );
 
 my $query_field = $entry_frame->Entry(
   -textvariable => \$query_string,
@@ -252,6 +252,68 @@ my $search_button = $entry_frame->Button(
   -anchor => 'c'
 );
 
+my $menubar = $mw->Menu();
+$mw->configure(-menu => $menubar);
+
+my $file_menu = $menubar->cascade(
+  -label => '~File',
+  -tearoff => 0
+);
+
+$file_menu->command(
+  -label => 'Open index file',
+  -accelerator => 'Ctrl-O',
+  -underline => 0,
+  -command => sub {},
+);
+
+$file_menu->command(
+  -label => 'Reload current index',
+  -accelerator => 'Ctrl-R',
+  -underline => 0,
+  -command => sub {
+    load_iidx($filename, \%iidx);
+    present_results(\$result_list, list_all(\%iidx));
+  },
+);
+
+$file_menu->command(
+  -label => 'Quit',
+  -accelerator => 'Ctrl-Q',
+  -underline => 0,
+  -command => sub { exit },
+);
+
+my $edit_menu = $menubar->cascade(
+  -label => '~Edit',
+  -tearoff => 0,
+);
+
+$edit_menu->command(
+  -label => 'Add entry',
+  -accelerator => 'Ctrl-A',
+  -underline => 0,
+  -command => sub {},
+);
+
+$edit_menu->command(
+  -label => 'Delete entry',
+  -accelerator => 'Ctrl-D',
+  -underline => 0,
+  -command => sub {},
+);
+
+my $help_menu = $menubar->cascade(
+  -label => '~Help',
+  -tearoff => 0,
+);
+
+$help_menu->command(
+  -label => 'About',
+  -underline => 0,
+  -command => sub {},
+);
+
 # +--------------+
 # | key bindings |
 # +--------------+
@@ -266,6 +328,11 @@ $query_field->bind('<Return>', sub {
 });
 
 $mw->bind('<Control-q>', sub { exit });
+
+$mw->bind('<Control-r>', sub {
+  load_iidx($filename, \%iidx);
+  present_results(\$result_list, list_all(\%iidx));
+ });
 
 # +-----------+
 # | main loop |
