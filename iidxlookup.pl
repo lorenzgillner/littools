@@ -158,8 +158,8 @@ my $mw = MainWindow->new();
 
 # TODO un-hardcode title and icon
 $mw->title("litsearch");
-my $icon = $mw->Photo(-file => '/var/lib/litsearch/icon.gif');
-$mw->iconimage($icon);
+#my $icon = $mw->Photo(-file => '/var/lib/litsearch/icon.gif');
+#$mw->iconimage($icon);
 #$mw->setIcon($icon);
 
 #my $font = 'courier 12';
@@ -213,20 +213,6 @@ my $entry_frame = $mw->Frame(
 
 $entry_frame->gridRowconfigure(0, -weight => 1);
 
-#~ my $reload_button = $entry_frame->Button(
-  #~ -text => "Reload",
-  #~ -font => $font,
-  #~ -padx => 2,
-  #~ -pady => 2,
-  #~ -command => sub {
-    #~ load_iidx($filename, \%iidx);
-    #~ present_results(\$result_list, list_all(\%iidx));
-  #~ }
-#~ )->pack(
-  #~ -side => 'left',
-  #~ -anchor => 'c'
-#~ );
-
 my $query_field = $entry_frame->Entry(
   -textvariable => \$query_string,
   -font => $font,
@@ -252,7 +238,14 @@ my $search_button = $entry_frame->Button(
   -anchor => 'c'
 );
 
-my $menubar = $mw->Menu();
+# +-----------+
+# | main menu |
+# +-----------+
+
+my $menubar = $mw->Menu(
+  -relief => 'flat'
+);
+
 $mw->configure(-menu => $menubar);
 
 my $file_menu = $menubar->cascade(
@@ -300,6 +293,7 @@ $edit_menu->command(
   -label => 'Delete entry',
   -accelerator => 'Ctrl-D',
   -underline => 0,
+  -state => 'disabled',
   -command => sub {},
 );
 
