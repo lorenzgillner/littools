@@ -32,7 +32,7 @@ fi
 echo "Index file is located at ${IIDX}"
 echo "Loading database, please wait ..."
 
-iidxlookup.pl "${IIDX}" | while read -r DOC; do
+iidxlookup.pl --title "litsearch" "${IIDX}" | while read -r DOC; do
 	echo "Opening ${DOC}"
 	${OPEN_CMD} "${DOC}" 2>&1 &
 done

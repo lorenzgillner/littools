@@ -216,10 +216,8 @@ $mw->bind('<Control-r>', sub {
 $mw->after(10, sub {
   load_iidx($filename, \%iidx);
   present_results(\$result_list, list_all(\%iidx));
+  $query_field->focus;
 });
-
-# focus the query field by default
-$query_field->focus;
 
 # start the main loop
 MainLoop();
@@ -259,7 +257,6 @@ sub load_iidx {
   my $loading_dialog = $mw->Toplevel;
   $loading_dialog->transient($mw);
   $loading_dialog->overrideredirect(1);
-  #$loading_dialog->geometry("+100+100");
 
   my $loading_text = $loading_dialog->Label(
     -text => "Loading " . $file_path,
@@ -269,14 +266,14 @@ sub load_iidx {
   );
 
   my $progress = $loading_dialog->ProgressBar(
-      -width => 20,
-      -length => 300,
-      -from => 0,
-      -to => $num_blocks,
-      -blocks => $num_blocks,
-      -gap => 1,
-      -colors => [0, 'dark green'],
-      -variable => \$blocks_done,
+    -width => 20,
+    -length => 300,
+    -from => 0,
+    -to => $num_blocks,
+    -blocks => $num_blocks,
+    -gap => 1,
+    -colors => [0, 'dark green'],
+    -variable => \$blocks_done,
   )->pack(
     -pady => 10,
     -padx => 10
