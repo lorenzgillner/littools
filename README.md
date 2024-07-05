@@ -73,4 +73,3 @@ Wrapper for `iidxlookup.pl` that opens its output in a default application.
 1. update database on file system changes (`inotifywatch`)
 1. command for updating an existing `iidx.csv`
 1. rebuild index
-1. command line option to set icon and title for iidxlookup.pl
