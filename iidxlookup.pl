@@ -62,7 +62,7 @@ my $result_list = $result_frame->Listbox(
   -foreground => 'black',
   -selectbackground => '#80cbf5',
   -selectforeground => 'black',
-  -yscrollcommand => ['set' => $scrollbar]
+  -yscrollcommand => ['set' => $scrollbar],
 );
 
 $scrollbar->configure(
@@ -256,12 +256,13 @@ sub load_iidx {
 
   my $loading_dialog = $mw->Toplevel;
   $loading_dialog->transient($mw);
-  $loading_dialog->overrideredirect(1);
+  #$loading_dialog->overrideredirect(1);
+  $loading_dialog->title("Loading ...");
 
   my $loading_text = $loading_dialog->Label(
-    -text => "Loading " . $file_path,
+    -text => "Loading index file: " . $file_path,
   )->pack(
-    -pady => 5,
+    -pady => 10,
     -padx => 10
   );
 
@@ -274,6 +275,7 @@ sub load_iidx {
     -gap => 1,
     -colors => [0, 'dark green'],
     -variable => \$blocks_done,
+    -relief => "sunken",
   )->pack(
     -pady => 10,
     -padx => 10
