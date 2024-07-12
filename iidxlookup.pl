@@ -329,7 +329,7 @@ sub present_results
     ${$listbox}->delete(0, 'end');
     foreach my $item (sort @_)
     {
-        ${$listbox}->insert('end', $item);
+        ${$listbox}->insert('end', (split /\//, $item)[-1]);
     }
 }
 
