@@ -39,10 +39,9 @@ my %iidx;
 my $mw = MainWindow->new();
 
 $mw->title($app_title);
+$mw->idletasks;
 my $icon = $mw->Photo(-file => $app_icon);
 $mw->iconimage($icon);
-
-# $mw->setIcon($icon);
 
 my $font = $app_font;
 
@@ -261,7 +260,7 @@ sub load_iidx
     $loading_dialog->title('Loading ...');
 
     my $loading_text =
-      $loading_dialog->Label(-text => 'Loading index file: ' . $file_path,)
+      $loading_dialog->Label(-text => 'Reading index file: ' . $file_path,)
       ->pack(-pady => [10,0],
              -padx => 10);
 
