@@ -9,6 +9,7 @@ install:
 	cp litsearch.png $(PREFIX)/share/icons/
 	cp icon.gif /var/lib/litsearch/
 	cp litsearch.desktop $(PREFIX)/share/applications/
+	mkdir -p $(HOME)/.config/litsearch
 
 uninstall:
 	rm $(addprefix $(PREFIX)/bin/, $(tools))

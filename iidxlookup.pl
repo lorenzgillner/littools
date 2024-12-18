@@ -14,7 +14,6 @@ use Getopt::Long;
 binmode STDOUT, ':utf8';
 
 my $app_title = $0;
-my $app_icon  = '/var/lib/litsearch/icon.gif';
 my $app_font  = 'sans 13';
 
 # if ( @ARGV != 1 ) {
@@ -23,7 +22,6 @@ my $app_font  = 'sans 13';
 
 GetOptions(
            'title|t=s' => \$app_title,
-           'icon|i=s'  => \$app_icon,
            'font|f=s'  => \$app_font
           )
   or die('Error in command line arguments\n');
@@ -40,8 +38,6 @@ my $mw = MainWindow->new();
 
 $mw->title($app_title);
 $mw->idletasks;
-my $icon = $mw->Photo(-file => $app_icon);
-$mw->iconimage($icon);
 
 my $font = $app_font;
 
@@ -54,15 +50,17 @@ my $result_frame = $mw->Frame()->pack(
 my $scrollbar = $result_frame->Scrollbar();
 
 my $result_list = $result_frame->Listbox(
-                                       -selectmode       => 'single',
-                                       -font             => $font,
-                                       -width            => 100,
-                                       -height           => 25,
-                                       -background       => 'white',
-                                       -foreground       => 'black',
-                                       -selectbackground => '#80cbf5',
-                                       -selectforeground => 'black',
-                                       -yscrollcommand => ['set' => $scrollbar],
+                                       -selectmode        => 'single',
+                                       -font              => $font,
+                                       -width             => 100,
+                                       -height            => 25,
+                                       -background        => 'white',
+                                       -foreground        => 'black',
+                                       -selectmode        => 'single',
+                                       -selectbackground  => '#80cbf5',
+                                       -selectforeground  => 'black',
+                                       -selectborderwidth => 0,
+                                       -yscrollcommand    => ['set' => $scrollbar],
 );
 
 $scrollbar->configure(-command => ['yview' => $result_list]);
@@ -328,7 +326,7 @@ sub present_results
     ${$listbox}->delete(0, 'end');
     foreach my $item (sort @_)
     {
-        ${$listbox}->insert('end', (split /\//, $item)[-1]);
+        ${$listbox}->insert('end', $item);
     }
 }
 
