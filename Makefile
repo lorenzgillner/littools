@@ -1,6 +1,7 @@
 PREFIX = ${HOME}/.local
+VERSION = $(shell head -n 1 VERSION)
 
-tools = mklitentry.sh mklitdb.sh mkiidx.pl iidxlookup.pl litsearch.sh
+tools = mklitentry.sh mklitdb.sh mkiidx.pl iidxlookup.pl
 
 .PHONY: install uninstall
 
@@ -9,7 +10,9 @@ install:
 	cp litsearch.png $(PREFIX)/share/icons/
 	cp icon.gif /var/lib/litsearch/
 	cp litsearch.desktop $(PREFIX)/share/applications/
-	mkdir -p $(HOME)/.config/litsearch
+	cp litsearchrc $(HOME)/.config/
+	sed 's/__VERSION__/$(VERSION)/' litsearch.sh > $(PREFIX)/bin/litsearch
+	chmod +x $(PREFIX)/bin/litsearch
 
 uninstall:
 	rm $(addprefix $(PREFIX)/bin/, $(tools))

@@ -1,8 +1,6 @@
 #!/bin/bash
 
-VERSION=0.2
-OPEN_CMD="zathura"
-GLOBAL_INVERSE_INDEX="/var/lib/litsearch/iidx.csv"
+source ${HOME}/.config/litsearchrc
 
 quit() {
 	exit 1
@@ -10,33 +8,33 @@ quit() {
 
 trap quit INT
 
-cat <<"EOT"
+cat <<"EOF"
  _ _ _                           _     
 | (_) |_ ___  ___  __ _ _ __ ___| |__  
 | | | __/ __|/ _ \/ _` | '__/ __| '_ \ 
 | | | |_\__ \  __/ (_| | | | (__| | | |
 |_|_|\__|___/\___|\__,_|_|  \___|_| |_|
 
-EOT
+EOF
 
-printf "version %s\n\n" "${VERSION}"
+printf "This is version __VERSION__\n\n"
 
 if [ $# -eq 1 ]; then
-	IIDX="$1"
-elif [ -e "${GLOBAL_INVERSE_INDEX}" ]; then
-	IIDX="${GLOBAL_INVERSE_INDEX}"
+	IINDEX="$1"
+elif [ -e "${LITSEARCH_IINDEX_PATH}" ]; then
+	IINDEX="${LITSEARCH_IINDEX_PATH}"
 else
-	IIDX="$(zenity --file-selection --icon-name=litsearch)" || quit
+	IINDEX="$(zenity --file-selection --icon-name=litsearch ${HOME})" || (echo "Canceled" && quit)
 fi
 
-echo "Index file is located at ${IIDX}"
+echo "Index file is located at ${IINDEX}"
 echo "Loading database, please wait ..."
 
-iidxlookup.pl --title "litsearch" "${IIDX}" | while read -r DOC; do
+iidxlookup.pl --title "litsearch" "${IINDEX}" | while read -r DOC; do
 	echo "Opening ${DOC}"
-	${OPEN_CMD} "${DOC}" 2>&1 &
+	${LITSEARCH_READER_COMMAND} "${DOC}" 2>&1 &
 done
 
-echo "Bye!"
+echo "Exiting ..."
 
 sleep 1

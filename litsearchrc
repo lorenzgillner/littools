@@ -1,0 +1,2 @@
+LITSEARCH_READER_COMMAND="xdg-open"
+LITSEARCH_IINDEX_PATH="/var/lib/litsearch/iidx.csv"
