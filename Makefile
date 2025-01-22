@@ -7,7 +7,7 @@ tools = mklitentry.sh mklitdb.sh mkiidx.pl iidxlookup.pl
 
 install:
 	cp $(tools) $(PREFIX)/bin/
-	cp litsearch.png $(PREFIX)/share/icons/
+	cp litsearch.svg $(PREFIX)/share/icons/
 	cp icon.gif /var/lib/litsearch/
 	cp litsearch.desktop $(PREFIX)/share/applications/
 	cp litsearchrc $(HOME)/.config/
