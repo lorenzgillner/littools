@@ -6,6 +6,7 @@ use warnings;
 use Tk;
 use Tk::Photo;
 use Tk::ProgressBar;
+use Tk::StatusBar;
 
 use Text::CSV;
 use Getopt::Long;
@@ -37,13 +38,14 @@ my $mw = MainWindow->new();
 
 $mw->title($app_title);
 $mw->idletasks;
+#$mw->#TODO center me
 
 my $font = $app_font;
 
 my $result_frame = $mw->Frame()->pack(
     -expand => 1,
     -fill   => 'both',
-    -side   => 'top'
+    -side   => 'bottom'
 );
 
 my $scrollbar = $result_frame->Scrollbar();
@@ -65,7 +67,7 @@ my $result_list = $result_frame->Listbox(
 $scrollbar->configure( -command => [ 'yview' => $result_list ] );
 
 $scrollbar->pack(
-    -side => 'left',
+    -side => 'right',
     -fill => 'y'
 );
 
@@ -77,13 +79,27 @@ $result_list->pack(
 
 my $entry_frame = $mw->Frame( -height => 20 )->pack(
     -expand => 0,
-    -fill   => 'x',
+    -fill   => 'both',
     -padx   => 2,
     -pady   => 2,
-    -side   => 'bottom'
+    -side   => 'top'
 );
 
 $entry_frame->gridRowconfigure( 0, -weight => 1 );
+
+my $open_button = $entry_frame->Button(
+    -text    => 'Reload',
+    -font    => $font,
+    -padx    => 2,
+    -pady    => 2,
+    -command => sub {
+	load_iidx( $filename, \%iidx );
+	present_results( \$result_list, list_all( \%iidx ) );
+    }
+)->pack(
+    -side   => 'left',
+    -anchor => 'c'
+);
 
 my $query_field = $entry_frame->Entry(
     -textvariable => \$query_string,
@@ -108,75 +124,13 @@ my $search_button = $entry_frame->Button(
 )->pack(
     -side   => 'left',
     -anchor => 'c'
-);
+    );
 
-# +--------------------------------------------+
-# | main menu (only here for historic reasons) |
-# +--------------------------------------------+
-
-my $menubar = $mw->Menu( -relief => 'flat' );
-
-$mw->configure( -menu => $menubar );
-
-my $file_menu = $menubar->cascade(
-    -label   => '~File',
-    -tearoff => 0
-);
-
-$file_menu->command(
-    -label       => 'Open index file',
-    -accelerator => 'Ctrl-O',
-    -underline   => 0,
-    -command     => sub { },
-);
-
-$file_menu->command(
-    -label       => 'Reload current index',
-    -accelerator => 'Ctrl-R',
-    -underline   => 0,
-    -command     => sub {
-        load_iidx( $filename, \%iidx );
-        present_results( \$result_list, list_all( \%iidx ) );
-    },
-);
-
-$file_menu->command(
-    -label       => 'Quit',
-    -accelerator => 'Ctrl-Q',
-    -underline   => 0,
-    -command     => sub { exit },
-);
-
-my $edit_menu = $menubar->cascade(
-    -label   => '~Edit',
-    -tearoff => 0,
-);
-
-$edit_menu->command(
-    -label       => 'Add entry',
-    -accelerator => 'Ctrl-A',
-    -underline   => 0,
-    -command     => sub { },
-);
-
-$edit_menu->command(
-    -label       => 'Delete entry',
-    -accelerator => 'Ctrl-D',
-    -underline   => 0,
-    -state       => 'disabled',
-    -command     => sub { },
-);
-
-my $help_menu = $menubar->cascade(
-    -label   => '~Help',
-    -tearoff => 0,
-);
-
-$help_menu->command(
-    -label     => 'About',
-    -underline => 0,
-    -command   => \&show_about_dialog,
-);
+my $status_bar = $mw->StatusBar();
+my $counter = 0;
+my $status = "Ready";
+$status_bar->addLabel(-textvariable => \$counter, -width => 10);
+$status_bar->addLabel(-textvariable => \$status);
 
 # +--------------+
 # | key bindings |
@@ -352,6 +306,9 @@ sub present_results {
     foreach my $item ( sort @_ ) {
         ${$listbox}->insert( 'end', $item );
     }
+
+    $counter = scalar(@_);
+    $status = "Ready";
 }
 
 sub list_all {
@@ -377,6 +334,8 @@ sub search {
     my @terms = ( split /\s+/, $query_string );
 
     my %hits;
+
+    $status = "Searching ...";
 
     foreach my $doc ( @{ $inverse_index->{ $terms[0] } } ) {
         my $document_path = get_path_only($doc);
