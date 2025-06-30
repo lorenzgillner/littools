@@ -68,8 +68,8 @@ Wrapper for `iidxlookup.pl` that opens its output in a default application.
 
 ## TODO
 
-1. calculate $TF$ or $TF/IDF$ in `mklitentry.sh`
-1. rank results in `iidxlookup.pl`
-1. update database on file system changes (`inotifywatch`)
-1. command for updating an existing `iidx.csv`
-1. rebuild index
+- calculate $TF$ or $TF/IDF$ in `mklitentry.sh`
+- rank results in `iidxlookup.pl`
+- update database on file system changes (`inotifywatch`)
+- command for updating an existing `iidx.csv`
+- rebuild index
