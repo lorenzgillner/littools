@@ -68,6 +68,7 @@ Wrapper for `iidxlookup.pl` that opens its output in a default application.
 
 ## TODO
 
+- use the status bar progress indicator instead of a modal dialog
 - calculate $TF$ or $TF/IDF$ in `mklitentry.sh`
 - rank results in `iidxlookup.pl`
 - update database on file system changes (`inotifywatch`)

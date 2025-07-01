@@ -54,7 +54,7 @@ my $result_list = $result_frame->Listbox(
     -selectmode        => 'single',
     -font              => $font,
     -width             => 100,
-    -height            => 25,
+    -height            => 20,
     -background        => 'white',
     -foreground        => 'black',
     -selectmode        => 'single',
@@ -77,8 +77,10 @@ $result_list->pack(
     -fill   => 'both'
 );
 
-my $entry_frame = $mw->Frame( -height => 20 )->pack(
-    -expand => 0,
+my $entry_frame = $mw->Frame(
+    -height => 20
+)->pack(
+    -expand => 1,
     -fill   => 'both',
     -padx   => 2,
     -pady   => 2,
@@ -152,6 +154,8 @@ $query_field->bind(
 );
 
 $mw->bind( '<Control-q>', sub { exit } );
+
+$mw->bind( '<Control-h>', sub { show_about_dialog() } );
 
 $mw->bind(
     '<Control-r>',
@@ -235,7 +239,7 @@ sub load_iidx {
     $loading_dialog->transient($mw);
     $loading_dialog->resizable( 0, 0 );
 
-    #$loading_dialog->overrideredirect(1);
+    $loading_dialog->overrideredirect(1);
     $loading_dialog->title('Loading ...');
 
     my $loading_text =
