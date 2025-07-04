@@ -7,15 +7,13 @@ tools = mklitentry.sh mklitdb.sh mkiidx.pl iidxlookup.pl
 
 install:
 	cp $(tools) $(PREFIX)/bin/
-	cp litsearch.svg $(PREFIX)/share/icons/
-	cp icon.gif $(PREFIX)/share/icons/litsearch.gif
+	cp litsearch.gif $(PREFIX)/share/icons/
 	cp litsearch.desktop $(PREFIX)/share/applications/
 	cp litsearchrc $(HOME)/.config/
-	sed 's/__VERSION__/$(VERSION)/' litsearch.sh > $(PREFIX)/bin/litsearch
+	sed 's%##VERSION##%$(VERSION)%;s%##PREFIX##%$(PREFIX)%' litsearch.in > $(PREFIX)/bin/litsearch
 	chmod +x $(PREFIX)/bin/litsearch
 
 uninstall:
 	rm $(addprefix $(PREFIX)/bin/, $(tools))
 	rm $(PREFIX)/share/applications/litsearch.desktop
-	rm $(PREFIX)/share/icons/litsearch.svg
 	rm $(PREFIX)/share/icons/litsearch.gif

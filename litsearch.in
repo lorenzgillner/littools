@@ -17,7 +17,7 @@ cat <<"EOF"
 
 EOF
 
-printf "This is version __VERSION__\n\n"
+printf "This is version ##VERSION##\n\n"
 
 if [ $# -eq 1 ]; then
 	IINDEX="$1"
@@ -30,7 +30,7 @@ fi
 echo "Index file is located at ${IINDEX}"
 echo "Loading database, please wait ..."
 
-iidxlookup.pl --title "litsearch" "${IINDEX}" | while read -r DOC; do
+iidxlookup.pl --title "litsearch" --icon "##PREFIX##/share/icons/litsearch.gif" "${IINDEX}" | while read -r DOC; do
 	echo "Opening ${DOC}"
 	${LITSEARCH_READER_COMMAND} "${DOC}" 2>&1 &
 done

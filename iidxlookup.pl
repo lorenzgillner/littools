@@ -15,6 +15,7 @@ use Getopt::Long;
 binmode STDOUT, ':utf8';
 
 my $app_title = $0;
+my $app_icon = '';
 my $app_font  = 'sans 13';
 
 # if ( @ARGV != 1 ) {
@@ -23,12 +24,15 @@ my $app_font  = 'sans 13';
 
 GetOptions(
     'title|t=s' => \$app_title,
+    'icon|i=s'  => \$app_icon,
     'font|f=s'  => \$app_font
 ) or die('Error in command line arguments\n');
 
 my $filename     = $ARGV[0];
 my $query_string = '';
 my %iidx;
+my $counter = 0;
+my $status = "Ready";
 
 # +-----------------+
 # | interface setup |
@@ -37,10 +41,13 @@ my %iidx;
 my $mw = MainWindow->new();
 
 $mw->title($app_title);
-$mw->idletasks;
+$mw->idletasks();
+$mw->geometry('640x480+0+0');
+if ($app_icon ne '') {
+    my $icon = $mw->Photo(-file => $app_icon);
+    $mw->iconimage($icon);
+}
 #$mw->#TODO center me
-
-my $font = $app_font;
 
 my $result_frame = $mw->Frame()->pack(
     -expand => 1,
@@ -52,9 +59,9 @@ my $scrollbar = $result_frame->Scrollbar();
 
 my $result_list = $result_frame->Listbox(
     -selectmode        => 'single',
-    -font              => $font,
-    -width             => 100,
-    -height            => 20,
+    -font              => \$app_font,
+    -width             => 1,
+    -height            => 1,
     -background        => 'white',
     -foreground        => 'black',
     -selectmode        => 'single',
@@ -80,18 +87,18 @@ $result_list->pack(
 my $entry_frame = $mw->Frame(
     -height => 20
 )->pack(
-    -expand => 1,
-    -fill   => 'both',
+    -expand => 0,
+    -fill   => 'x',
     -padx   => 2,
     -pady   => 2,
-    -side   => 'top'
+    -side   => 'bottom'
 );
 
-$entry_frame->gridRowconfigure( 0, -weight => 1 );
+# $entry_frame->gridRowconfigure( 0, -weight => 1 );
 
 my $open_button = $entry_frame->Button(
     -text    => 'Reload',
-    -font    => $font,
+    -font    => \$app_font,
     -padx    => 2,
     -pady    => 2,
     -command => sub {
@@ -105,7 +112,7 @@ my $open_button = $entry_frame->Button(
 
 my $query_field = $entry_frame->Entry(
     -textvariable => \$query_string,
-    -font         => $font,
+    -font         => \$app_font,
     -background   => 'white',
     -foreground   => 'black'
 )->pack(
@@ -117,20 +124,19 @@ my $query_field = $entry_frame->Entry(
 
 my $search_button = $entry_frame->Button(
     -text    => 'Search',
-    -font    => $font,
+    -font    => \$app_font,
     -padx    => 2,
     -pady    => 2,
     -command => sub {
+        $status = "Searching ...";
         search_and_present( $query_string, \%iidx, \$result_list );
     }
 )->pack(
     -side   => 'left',
     -anchor => 'c'
-    );
+);
 
 my $status_bar = $mw->StatusBar();
-my $counter = 0;
-my $status = "Ready";
 $status_bar->addLabel(-textvariable => \$counter, -width => 10);
 $status_bar->addLabel(-textvariable => \$status);
 
@@ -226,6 +232,8 @@ sub deduplicate {
 sub load_iidx {
     my $file_path     = $_[0];
     my $inverse_index = $_[1];
+
+    $status = "Loading ...";
 
     my $line_count = `wc -l < $file_path`;
     chomp($line_count);
