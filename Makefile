@@ -1,7 +1,7 @@
 PREFIX = ${HOME}/.local
 VERSION = $(shell head -n 1 VERSION)
 
-tools = mklitentry.sh mklitdb.sh mkiidx.pl iidxlookup.pl bookworm.sh
+tools = mklitentry.sh mklitdb.sh mkiidx.pl iidxlookup.pl bookworm.sh add-to-library.sh rebuild-index.sh
 
 .PHONY: install uninstall
 
