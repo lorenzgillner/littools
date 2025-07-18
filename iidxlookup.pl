@@ -19,7 +19,7 @@ my $app_icon = '';
 my $app_font  = 'sans 13';
 
 # if ( @ARGV != 1 ) {
-#   die 'Usage: $0 <my_inverse_index.csv>\n';
+#     die 'Usage: $0 <my_inverse_index.csv>\n';
 # }
 
 GetOptions(
@@ -39,15 +39,18 @@ my $status = "Ready";
 # +-----------------+
 
 my $mw = MainWindow->new();
+my $w = 640;
+my $h = 480;
+my $x = $mw->screenwidth - 1.2 * $w;
+my $y = $mw->screenheight/2 - $h;
 
 $mw->title($app_title);
 $mw->idletasks();
-$mw->geometry('640x480+0+0');
+$mw->geometry("${w}x${h}+${x}+${y}");
 if ($app_icon ne '') {
     my $icon = $mw->Photo(-file => $app_icon);
     $mw->iconimage($icon);
 }
-#$mw->#TODO center me
 
 my $result_frame = $mw->Frame()->pack(
     -expand => 1,

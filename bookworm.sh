@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$(pgrep -w -x "bookworm.sh" -c)" -ne 1 ]
+if [ "$(pgrep -w -x "$0" -c)" -gt 1 ]
 then
 	echo "Another instance is already running"
 else
